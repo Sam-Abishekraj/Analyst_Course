@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalyst | Job-Ready Data Analytics by Knowledge Hive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-dark: #0f0518;
+            --bg-panel: #1a0b2e;
+            --primary: #9d4edd;
+            --primary-glow: #c77dff;
+            --accent: #e0aaff;
+            --text-main: #f3e8ff;
+            --text-muted: #b8a4d4;
+            --glass: rgba(45, 27, 78, 0.4);
+            --glass-border: rgba(157, 78, 221, 0.3);
+            --gradient: linear-gradient(135deg, #5a189a 0%, #3c096c 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(157, 78, 221, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--accent);
+        }
+
+        .btn-outline:hover {
+            background: rgba(157, 78, 221, 0.1);
+        }
+
+        /* --- NAV --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 5, 24, 0.9);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 20px 0;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+        }
+
+        .logo-sub {
+            font-size: 0.75rem;
+            color: var(--primary-glow);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* --- HERO --- */
+        header {
+            padding: 180px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1200px;
+            height: 1200px;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.15) 0%, rgba(15, 5, 24, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(157, 78, 221, 0.15);
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            border-radius: 30px;
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+            backdrop-filter: blur(5px);
+        }
+
+        header h1 {
+            font-size: 3.8rem;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+        }
+
+        header h1 span {
+            background: -webkit-linear-gradient(0deg, #e0aaff, #9d4edd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-weight: 300;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat-bar {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 80px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 40px;
+        }
+
+        .stat-item h4 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            font-size: 0.9rem;
+            margin: 0;
+            color: var(--text-muted);
+        }
+
+        /* --- FEATURES --- */
+        .features {
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #130722 100%);
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 40px 30px;
+            border-radius: 20px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(45, 27, 78, 0.6);
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: rgba(157, 78, 221, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            color: var(--primary-glow);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- VIBE CODING SPECIAL --- */
+        .vibe-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .vibe-box {
+            background: linear-gradient(135deg, #240a3d 0%, #19062b 100%);
+            border: 1px solid var(--primary);
+            border-radius: 30px;
+            padding: 60px;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            box-shadow: 0 0 80px rgba(157, 78, 221, 0.15);
+        }
+
+        .vibe-content {
+            flex: 1;
+        }
+
+        .vibe-visual {
+            flex: 1;
+            background: #0f0518;
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .workflow-step {
+            background: rgba(255,255,255,0.05);
+            padding: 15px 25px;
+            border-radius: 12px;
+            width: 100%;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .workflow-step.active {
+            background: rgba(157, 78, 221, 0.1);
+            border-color: var(--primary);
+        }
+
+        .workflow-arrow {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* --- CURRICULUM --- */
+        .curriculum {
+            padding: 100px 0;
+            background: #0b0312;
+        }
+
+        .accordion {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .accordion-item {
+            border: 1px solid rgba(255,255,255,0.05);
+            background: #12061f;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: rgba(157, 78, 221, 0.05);
+        }
+
+        .accordion-title {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .module-number {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: var(--primary-glow);
+            font-size: 1rem;
+            background: rgba(157, 78, 221, 0.1);
+            padding: 5px 12px;
+            border-radius: 8px;
+        }
+
+        .accordion-header h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            color: var(--text-muted);
+        }
+
+        .accordion-content {
+            padding: 0 30px 30px 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .month-label {
+            display: block;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .accordion-content ul {
+            list-style-type: none;
+            margin-top: 15px;
+        }
+
+        .accordion-content li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+
+        .accordion-content li::before {
+            content: "✓";
+            color: var(--primary-glow);
+            font-weight: bold;
+        }
+
+        .tool-tag {
+            font-size: 0.7rem;
+            background: rgba(255,255,255,0.08);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+            white-space: nowrap;
+        }
+
+        /* --- CTA --- */
+        .cta {
+            padding: 120px 0;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(90, 24, 154, 0.2) 0%, rgba(15, 5, 24, 1) 70%);
+        }
+
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 40px 0;
+            color: #666;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            .vibe-box { flex-direction: column; padding: 30px; }
+            .stat-bar { flex-direction: column; gap: 30px; text-align: center;}
+            .nav-links { display: none; }
+            .nav-content { justify-content: center; }
+            .brand-group { align-items: center; }
+            .btn-nav { display: none; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="container nav-content">
+            <div class="brand-group">
+                <div class="logo-main">CATALYST</div>
+                <div class="logo-sub">By Knowledge Hive</div>
+            </div>
+            <div class="nav-links">
+                <a href="#about">The Approach</a>
+                <a href="#curriculum">5-Month Roadmap</a>
+                <a href="#vibe-coding">Vibe Coding</a>
+                <a href="#tools">Tools</a>
+            </div>
+            <a href="#enroll" class="btn btn-primary btn-nav">Get Syllabus</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header>
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <span class="badge">Career Transition & Upskilling</span>
+                <h1>Transform into a Job-Ready<br><span>Data Analyst</span></h1>
+                <p>A comprehensive 5-month accelerator for Career Switchers and IT Professionals. Master the complete stack: Excel, SQL, Power BI, and Python—boosted by AI.</p>
+                <div style="display: flex; justify-content: center; gap: 15px;">
+                    <a href="#curriculum" class="btn btn-primary">View Roadmap</a>
+                    <a href="#about" class="btn btn-outline">Why Catalyst?</a>
+                </div>
+
+                <div class="stat-bar">
+                    <div class="stat-item">
+                        <h4>5</h4>
+                        <p>Months Duration</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>100%</h4>
+                        <p>Practical Labs</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Job</h4>
+                        <p>Placement Support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- FEATURES -->
+    <section class="features" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Catalyst?</h2>
+                <p style="color: var(--text-muted);">We bridge the gap between "Learning" and "Industry Requirements".</p>
+            </div>
+            
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon-box"><i data-lucide="bar-chart-2"></i></div>
+                    <h3>Industry-Standard Stack</h3>
+                    <p>We don't just teach tools; we teach the ecosystem. Learn how Excel, SQL, and Python talk to each other in real corporate environments.</p>
+                </div>
+                <div class="card">
+                    <div class="icon-box"><i data-lucide="zap"></i></div>
+                    <h3>Vibe Coding (AI)</h3>
+                    <p>Future-proof your career. Learn to leverage AI agents to handle syntax and debugging, allowing you to focus on high-level strategy and logic.</p>
+                </div>
+                <div class="card">
+                    <div class="icon-box"><i data-lucide="briefcase"></i></div>
+                    <h3>Placement Ready</h3>
+                    <p>Our curriculum is reverse-engineered from 2026 job descriptions. By Month 5, you will have a portfolio that cracks interviews.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CURRICULUM -->
+    <section class="curriculum" id="curriculum">
+        <div class="container">
+            <div class="section-header" style="text-align: center;">
+                <h2>The 5-Month Job-Ready Roadmap</h2>
+                <p style="color: var(--text-muted);">A rigorous, structured path to becoming a full-stack analyst.</p>
+            </div>
+
+            <div class="accordion">
+                <!-- Month 1 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <div class="accordion-title">
+                            <span class="module-number">Month 1</span>
+                            <h3>Excel Proficiency & Statistical Logic</h3>
+                        </div>
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <span class="month-label">Foundations</span>
+                            <ul>
+                                <li>Advanced Excel: Lookups, Index/Match, Pivot Reporting <span class="tool-tag">Excel</span></li>
+                                <li>Business Statistics: Mean, Median, Mode, Standard Deviation <span class="tool-tag">Math</span></li>
+                                <li>Data Cleaning Techniques & Best Practices</li>
+                                <li>Understanding Business KPIs and Metrics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Month 2 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <div class="accordion-title">
+                            <span class="module-number">Month 2</span>
+                            <h3>SQL & Database Management</h3>
+                        </div>
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <span class="month-label">The Backend</span>
+                            <ul>
+                                <li>Relational Database Fundamentals <span class="tool-tag">Theory</span></li>
+                                <li>SQL Queries: SELECT, FROM, WHERE, GROUP BY <span class="tool-tag">SQL</span></li>
+                                <li>Advanced Joins & Subqueries for Complex Analysis</li>
+                                <li>Connecting SQL to Excel/Power BI</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Month 3 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <div class="accordion-title">
+                            <span class="module-number">Month 3</span>
+                            <h3>Data Storytelling with Power BI</h3>
+                        </div>
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <span class="month-label">Visualization</span>
+                            <ul>
+                                <li>Data Modeling & Star Schema Design <span class="tool-tag">Power BI</span></li>
+                                <li>DAX Formulas for Time Intelligence</li>
+                                <li>Building Interactive & Dynamic Dashboards</li>
+                                <li>UX/UI Principles for Data Presentation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Month 4 -->
+                <div class="accordion-item" style="border: 1px solid var(--primary);">
+                    <div class="accordion-header">
+                        <div class="accordion-title">
+                            <span class="module-number">Month 4</span>
+                            <h3>Python for Data Analytics</h3>
+                        </div>
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <span class="month-label">Advanced Logic</span>
+                            <ul>
+                                <li>Python Fundamentals for Analysts (Not Developers) <span class="tool-tag">Python</span></li>
+                                <li><b>Pandas Library:</b> Manipulating Millions of Rows</li>
+                                <li><b>NumPy:</b> Statistical Computing</li>
+                                <li>Matplotlib & Seaborn for Custom Visualizations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Month 5 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <div class="accordion-title">
+                            <span class="module-number">Month 5</span>
+                            <h3>Vibe Coding (AI) & Career Launch</h3>
+                        </div>
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <span class="month-label">The Edge</span>
+                            <ul>
+                                <li><b>Vibe Coding:</b> AI-Assisted Workflow & Automation <span class="tool-tag">AI Tools</span></li>
+                                <li>Capstone Project: End-to-End Business Solution</li>
+                                <li>Resume Optimization & Portfolio Building</li>
+                                <li>Mock Technical Interviews & Job Strategy</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- VIBE CODING EXPLANATION -->
+    <section class="vibe-section" id="vibe-coding">
+        <div class="container">
+            <div class="vibe-box">
+                <div class="vibe-content">
+                    <span class="badge" style="background: rgba(255,255,255,0.1); border:none; color: #fff;">New for 2026</span>
+                    <h2 style="margin: 20px 0;">What is Vibe Coding?</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">
+                        Companies today want speed and insight, not just lines of code. Vibe Coding is the modern workflow of using AI to accelerate analysis.
+                    </p>
+                    <p style="color: var(--text-muted); margin-bottom: 30px;">
+                        We teach you how to "Manage" the code rather than "Write" every character. You provide the business logic and the prompt; the AI handles the syntax. This makes you 10x faster than a traditional analyst.
+                    </p>
+                    <a href="#enroll" class="btn btn-outline" style="border-color: rgba(255,255,255,0.2); color: white;">Apply Now</a>
+                </div>
+                <div class="vibe-visual">
+                    <h3 style="margin-bottom: 20px; font-size: 1.2rem;">The Workflow</h3>
+                    
+                    <div class="workflow-step">
+                        <i data-lucide="message-square" style="color: var(--primary-glow);"></i>
+                        <div>
+                            <strong style="color: white; font-size: 0.95rem;">1. The Prompt</strong>
+                            <div style="font-size: 0.8rem; color: #aaa;">"Analyze the sales trend and forecast Q4."</div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-arrow"><i data-lucide="arrow-down"></i></div>
+
+                    <div class="workflow-step active">
+                        <i data-lucide="cpu" style="color: var(--primary-glow);"></i>
+                        <div>
+                            <strong style="color: white; font-size: 0.95rem;">2. AI Execution</strong>
+                            <div style="font-size: 0.8rem; color: #aaa;">Generates Python/Pandas logic instantly.</div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-arrow"><i data-lucide="arrow-down"></i></div>
+
+                    <div class="workflow-step">
+                        <i data-lucide="pie-chart" style="color: var(--primary-glow);"></i>
+                        <div>
+                            <strong style="color: white; font-size: 0.95rem;">3. The Result</strong>
+                            <div style="font-size: 0.8rem; color: #aaa;">Interactive Dashboard Ready for Stakeholders.</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>Your New Career Starts Here</h2>
+            <p>Join the Catalyst program by Knowledge Hive. <br>Practical, Modern, and Focused on getting you Hired.</p>
+            <button class="btn btn-primary" onclick="alert('Applications Open for Next Batch!')">Download Full Syllabus</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Knowledge Hive. Catalyst Program. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Accordion Logic
+        const accordions = document.querySelectorAll('.accordion-header');
+        accordions.forEach(acc => {
+            acc.addEventListener('click', () => {
+                const body = acc.nextElementSibling;
+                const icon = acc.querySelector('i');
+                
+                // Toggle active class
+                acc.classList.toggle('active');
+
+                if (body.style.maxHeight) {
+                    body.style.maxHeight = null;
+                    icon.style.transform = "rotate(0deg)";
+                } else {
+                    // Close others (optional)
+                    document.querySelectorAll('.accordion-body').forEach(b => b.style.maxHeight = null);
+                    document.querySelectorAll('.accordion-header i').forEach(i => i.style.transform = "rotate(0deg)");
+
+                    body.style.maxHeight = body.scrollHeight + "px";
+                    icon.style.transform = "rotate(180deg)";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
